@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body{
+            height: 1000000px;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+   <script>
+       
+       function throttle(fun,delay){
+           let last = 0;
+           
+           return function(...args){
+               let now = new Date()
+               if(now-last>delay){
+                last= now
+                   fun.apply(this,args)
+               }
+           }
+       }
+       
+       function test(){
+           console.log('滚动了！');
+       }
+       let testThrottle=throttle(test,1000)
+       document.addEventListener('scroll',testThrottle)
+   </script>
+</body>
+</html>

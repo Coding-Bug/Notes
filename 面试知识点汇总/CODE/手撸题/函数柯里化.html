@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function curry(fn){
+            let params = []
+            return function cFn(...args){
+                // 如果还有参数就拼接
+                if(args.length){
+                    params=[...params,...args]
+                    return cFn
+                }
+                return fn(params)
+            }
+        }
+        function add(arr){
+            return arr.reduce((total,num)=>{
+                return total+num
+            })
+        }
+        let curryAdd = curry(add)
+        console.log(curryAdd(1)(2)(3,4)())
+    </script>
+</body>
+</html>

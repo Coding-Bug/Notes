@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function bubbleSort(arr = []) {
+        let len = arr.length;
+        // i可以理解为已经有多少个沉到最底
+        // 一共需要沉n-1个
+        for (let i = 0; i < len - 1; ++i) {
+          let flag = false; // 有没有进行交换
+          // j用来每次比较操作
+          // j到最后一个要比较的前一个位置
+          for (let j = 0; j < len - 1 - i; ++j) {
+            if (arr[j] > arr[j + 1]) {
+              flag = true;
+              let tmp = arr[j];
+              arr[j] = arr[j + 1];
+              arr[j + 1] = tmp;
+            }
+          }
+
+          // 每次循环完没有交换就结束
+          if (!flag) {
+            break;
+          }
+        }
+        return arr;
+      }
+
+      let arr = [3, 2, 1, 5, 4];
+      arr = bubbleSort(arr);
+      console.log(arr);
+    </script>
+  </body>
+</html>

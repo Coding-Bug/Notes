@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 只要在作用域外加立即执行函数那么就不会挂载到全局了
+        function loop(){
+            (function(){
+                for(var i = 0;i<3;++i){
+                    console.log(i)
+                }
+            })()
+            console.log(i)
+        }
+        loop()
+    </script>
+</body>
+</html>

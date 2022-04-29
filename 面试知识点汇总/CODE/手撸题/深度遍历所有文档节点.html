@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="father">
+      dasdsad
+      <div class="son">
+        sdadsa
+        <div class="son1">dsadsa</div>
+        <div class="son2">dsadsa</div>
+      </div>
+    </div>
+    <script>
+      function getDom(parent) {
+        
+        // 如果是元素就输出
+        // 只输出元素
+        if(parent.nodeType==1){
+            console.log(parent);
+        }
+        let children = parent.childNodes;
+        if (children) {
+          let len = children.length;
+          for (let i = 0; i < len; ++i) {
+            getDom(children[i]);
+          }
+        }
+      }
+      let root = document.querySelector("body");
+      getDom(root);
+      root.get
+    </script>
+  </body>
+</html>

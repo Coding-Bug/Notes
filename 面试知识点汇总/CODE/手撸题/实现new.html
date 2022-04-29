@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        function myNew() {
+            // 创建一个新对象
+            const obj = new Object()
+
+            // 获取传入的构造函数
+            // argument不是数组，所以要用
+            let Constructor = Array.prototype.shift.call(arguments)
+            // 改变obj的隐式原型
+            obj.__proto__=Constructor.prototype
+
+            // 执行构造函数，并让this指向这个对象
+            let result =  Constructor.apply(obj,arguments)
+
+            // 判断返回结果
+            return Object.prototype.toString.call(result)==='[object Object]'?result:obj
+        }
+
+
+
+        // 测试
+        function Person(name, age) {
+            this.name = name,
+            this.age = age,
+            this.eat = function () {
+                console.log('I can Eat')
+            }
+        }
+        let myPerson = myNew(Person,'张三', 22)
+        console.log(myPerson)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 定义Router
+        class Router {
+            constructor() {
+                this.routes = {} // 存放路由path以及callback
+                this.currentUrl = ""
+
+                // 监听change调用相对应的路由回调
+                // 注意要把this传进去
+                window.addEventListener('load', this.refresh, false);
+                window.addEventListener('hashchange', this.refresh, false);
+            }
+
+            // 配置一个路由的函数
+            route(path, callback) {
+                this.routes[path] = callback
+            }
+
+            // push一个路径的时候
+            push(path) {
+                // 修改浏览器的路径
+                window.location.hash = path
+                this.routes[path] && this.routes[path]()
+            }
+
+
+            // 这个比较难搞，因为不能够获取到那个实例
+            refresh() {
+
+            }
+        }
+        // 使用Router
+        window.myRouter = new Router()
+        myRouter.route('/', () => console.log('page1'))
+        myRouter.route('/page2', () => console.log('page2'))
+        myRouter.push('/') // page1  
+        myRouter.push('/page2') // page2 
+    </script>
+</body>
+
+</html>

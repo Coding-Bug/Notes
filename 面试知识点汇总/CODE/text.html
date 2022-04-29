@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      div {
+        height: 200px;
+        width: 400px;
+        background-color: green;
+      }
+      div::after {
+        display: block;
+        content: "dsadsa";
+        background-color: pink;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      /**
+       * call实现原理
+       */
+      Function.prototype.$call = function (context, ...args) {
+        const fn = this; // 调用call方法的目标函数
+        console.log(fn)
+        context.fn = fn; // 函数挂到目标对象身上
+        context.fn(...args); // 执行fn并传参，这时候this已经执行context了，因为fn是contex调用的
+        delete context.fn; // 记得删除fn，不要污染原对象
+      };
+      let fn = ()=>{
+        console.log(this)
+      }
+      let cat = {
+        a:1,
+        b:this
+      }
+      fn.$call(fn)
+      console.log(cat)
+    </script>
+  </body>
+</html>

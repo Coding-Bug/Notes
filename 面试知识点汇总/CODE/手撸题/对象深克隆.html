@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function deepClone(obj, cache = new WeakMap()) {
+        if (!obj || typeof obj !== "object") {
+          return obj;
+        }
+        if (obj instanceof Date) {
+          return new Dtae(obj);
+        }
+        if (obj instanceof RegExp) {
+          return new RegExp(obj);
+        }
+
+        // 判断是否循环引用,若出现则返回缓存的对象
+        if (cache.get(obj)) {
+          return cache.get(obj);
+        }
+        let cloneObj = new obj.constructor();
+        // 下次再用拷贝obj，就直接用已经拷贝过的那个(浅拷贝)
+        cache.set(obj, cloneObj); // 缓存对象，防止循环引用问题
+
+        for (let key in obj) {
+          // 不用拷贝原型链上的到实例，原型链已经拷贝过了
+          if (obj.hasOwnProperty(key)) {
+            cloneObj[key] = deepClone(obj[key], cache); // 递归拷贝
+          }
+        }
+
+        return cloneObj;
+      }
+
+      // 测试
+      const obj = {
+        name: "CJF",
+        age: 22,
+        school: "WHUT",
+      };
+
+      obj.self = obj; // 循环引用
+      const clone = deepClone(obj);
+      console.log(obj);
+      console.log(clone);
+    </script>
+  </body>
+</html>

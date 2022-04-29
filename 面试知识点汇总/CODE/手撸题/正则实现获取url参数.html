@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function getParams(url){
+            let params={}
+            let s1 = url
+            s1=s1.replace(/[\s\S]*\?/,'')
+            console.log(s1)
+            if(s1){
+                let result
+                let reg = /([\s\S]*?)=([\s\S]*?)(\&|$)/g  // 注意这里最后面的&
+                while(result=reg.exec(s1)){
+                    params[result[1]]=result[2]
+                }
+            }
+            return params
+        }
+
+        console.log(getParams('https://cn.bing.com/search?q=dasd&form=ANSPH1&refig=3b9788e8650a42a29fc2cd0022b18cbd&pc=U531'))
+    </script>
+</body>
+</html>

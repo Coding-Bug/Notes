@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function Animal(name) {
+        this.name = name || "animal";
+        this.sleep = function () {
+          console.log(this.name + "正在睡觉");
+        };
+      }
+
+      Animal.prototype.eat = function (food) {
+        console.log(this.name + "正在吃：" + food);
+      };
+      
+      // 创建没有实例方法的类去获取Animal类的原型
+      var Super = function(){}
+      Super.prototype = Animal.prototype
+
+      // 构造继承
+      function Cat(name, color) {
+        Animal.call(this, name);
+        this.color = color;
+      }
+
+      Cat.prototype =  new Super
+      
+      let myCat = new Cat('Tom','white')
+      console.log(myCat);
+    </script>
+  </body>
+</html>

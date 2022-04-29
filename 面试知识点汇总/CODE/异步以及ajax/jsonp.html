@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jsonp</title>
+</head>
+<body>
+    <script>
+        //动态创建script标签
+        let script = document.createElement("script")
+        // script标签的scr属性设置接口地址，并带一个callback回调函数
+        script.src = "http://127.0.0.1:8080/test?callback=jsonPcallback"
+        // 插入页面
+        document.head.appendChild(script)
+        // 通过定义函数名去接受后台返回的数据
+        function jsonPcallback(data){
+            // jsonp取得的数据是json字符串
+        }
+    </script>
+</body>
+</html>

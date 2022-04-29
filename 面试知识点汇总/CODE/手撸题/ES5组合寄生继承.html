@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Parent(name){
+            this.name=name
+        }
+        Parent.prototype.head=function(){
+            console.log('有着浓密的头发');
+        }
+
+        function Child(name,school){
+            Parent.call(this,name)
+            this.school = school
+        }
+        
+        // 将父亲的原型挂载到孩子上(如果直接赋值那么孩子的原型会直接等于父亲的原型，这样不敌)
+        Child.prototype  = Object.create(Parent.prototype)
+
+        // 因为改变了孩子的原型，所以孩子原型上的constructot要变回来
+        Child.prototype.constructor = Child
+
+        let child = new Child('小明',20)
+        console.log(child);
+    </script>
+</body>
+</html>

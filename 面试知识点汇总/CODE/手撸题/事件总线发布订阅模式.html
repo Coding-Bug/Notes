@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class EventEmitter{
+            constructor(){
+                this.cache = {} // 存放绑定的事件名和回调函数
+            }
+
+            on(name,fn){
+                if(this.cache[name]){
+                    this.cache[name].push(fn)
+                }else{
+                    this.cache[name]=[fn]
+                }
+            }
+
+            off(name,fn){
+                const tasks = this.cache[name]  // 取出这个事件的所有回调
+                if(tasks){
+                    const index= tasks.findIndex((f)=>f===fn)
+                    if(index>=0){
+                        tasks.splice(index,1)
+                    }
+                }
+            }
+
+            emit(name,once = false){
+                if(this.cache[name]){
+                    // 用slice生成副本
+                    const tasks = this.cache[name]
+                    tasks.forEach(fn=>{
+                        fn()
+                    })
+
+                    // 如果只触发一次
+                    if(once){
+                        delete this.cache[name]
+                    }
+                }
+            }
+        }
+
+        const eventBus= new EventEmitter()
+        const task1 = ()=>{
+            console.log('task1')
+        }
+        const task2 = ()=>{
+            console.log('task2')
+        }
+
+        eventBus.on('task',task1)
+        eventBus.on('task',task2)
+        eventBus.off('task',task1)
+
+        eventBus.emit('task')
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function Student() {
+        this.name = "张三";
+        this.course = ["Math，Chinese,CS"];
+        this.grande = {
+          Math: 88,
+          Chinese: 99,
+          CS: 100,
+        };
+      }
+      function deepClone(obj) {
+        // 判断是否基本类型
+        switch (typeof obj) {
+          case "undefined":
+            return undefined;
+          case "number":
+            return obj - 0;
+          case "string":
+            return obj + "";
+          case "boolean":
+            return obj;
+          case "object":
+            // 判断obj类型，决定我们返回去的类型
+            // 如果不判断，你就不知道返回的是数组还是对象
+            let newObj = obj instanceof Array ? [] : {};
+            // 判断每一项
+            for (let item in obj) {
+              let tmp = null;
+              // 如果当前项是数组或者对下个，则继续深克隆
+              if (typeof obj[item] === "object") {
+                tmp = deepClone(obj[item]);
+              } else {
+                // 否则直接赋值就好
+                tmp = obj[item];
+              }
+              // 把克隆的这一项添加到新对象
+              newObj[item] = tmp;
+            }
+            return newObj;
+        }
+      }
+
+      let obj1 = true;
+      let obj2 = deepClone(obj1);
+      console.log(obj2);
+    </script>
+  </body>
+</html>

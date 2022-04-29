@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <button>先冒泡后捕获</button>
+       <button>先捕获后冒泡</button>
+    
+    
+    <script>
+        let btns = document.querySelectorAll('button')
+        btns[0].addEventListener('click',()=>{
+            console.log('按钮1冒泡');
+
+        },false)
+        btns[0].addEventListener('click',()=>{
+            console.log('按钮1捕获');
+        },false)
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 创建XMLHttpRequest对象
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "http://127.0.0.1:4523/mock/649156/test", true);
+
+      //发送信息至服务器时内容编码类型
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      // 发送请求
+      xhr.send("username=CJF");
+
+      // 绑定请求状态改变触发函数
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            console.log(JSON.parse(xhr.responseText));
+          } else {
+            console.log(xhr.status);
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

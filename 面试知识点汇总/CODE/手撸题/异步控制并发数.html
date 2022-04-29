@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function limitRequest(urls = [], limit = 3) {
+        return new Promise((resolve, reject) => {
+          const len = urls.length;
+          // count是指完成了多少任务，而不是指开始了多少任务
+          let count = 0;
+
+          // 同时启动limit个任务
+          while (limit > 0) {
+            start();
+            limit--;
+          }
+
+          function start() {
+            const url = urls.shift(); // 弹出剩余的最前任务
+            if (url) {
+              axios.post(url)
+                .then((res) => {
+                  // do
+                })
+                .catch((err) => {
+                  //do
+                })
+                .finally(() => {
+                  // 如果最后一个任务已经完成，则promise改变状态
+                  if (count == len) {
+                    resolve();
+                  } else {
+                    count++;
+                    start();
+                  }
+                });
+            }
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

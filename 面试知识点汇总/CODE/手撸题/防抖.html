@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>防抖</button>
+    <script>
+        let btn = document.querySelector('button')
+        function test(){
+            console.log('发送请求！');
+        }
+        function debounce(fun,delay){
+            let timer = null
+            // funtion刚开始就被调用，所以用返回函数的形式
+            return function(...args){
+                let self = this;       // 保存this(指向事件元素)
+                if(timer){
+                    clearInterval(timer)   // 清除定时器
+                }
+                timer = setTimeout(()=>{
+                    console.log(this)
+                    fun.apply(self,args)  // 发送请求
+                },delay)
+            }
+        }
+        let debounceTest = debounce(test,1000)
+        btn.addEventListener('click',debounceTest)
+    </script>
+</body>
+</html>

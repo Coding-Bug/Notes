@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>拖拽元素</title>
+    <style>
+      .father {
+        position: relative;
+        margin: 200px auto;
+        width: 200px;
+        height: 200px;
+        background-color: pink;
+      }
+
+      .son {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        left: 0;
+        background-color: greenyellow;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="father">
+      <div class="son"></div>
+    </div>
+    <script>
+      // 获取元素
+      let father = document.querySelector(".father");
+      let son = document.querySelector(".son");
+      // 鼠标初始坐标
+      let startX = 0;
+      let startY = 0;
+      // 子元素初始偏移
+      let sonX = 0;
+      let sonY = 0;
+
+      // 移动后的坐标
+      let newX = 0;
+      let newY = 0;
+
+      // son最大偏移
+      let maxX = father.offsetWidth - son.offsetWidth;
+      let maxY = father.offsetHeight - son.offsetHeight;
+
+      // 点击时
+      son.addEventListener("mousedown", function (e) {
+        e.preventDefault;
+
+        // 获取鼠标位置和子元素的初始偏移
+        startX = e.clientX;
+        startY = e.clientY;
+        sonX = son.offsetLeft;
+        sonY = son.offsetTop;
+
+        let moveSon = function (e) {
+          newX = e.clientX - startX + sonX;
+          newY = e.clientY - startY + sonY;
+
+          if (newX <= 0) {
+            newX = 0;
+          } else if (newX >= maxX) {
+            newX = maxX;
+          }
+
+          if (newY <= 0) {
+            newY = 0;
+          } else if (newY >= maxY) {
+            newY = maxY;
+          }
+          son.style.left = newX + "px";
+          son.style.top = newY + "px";
+        };
+        // 移动函数
+        son.addEventListener("mousemove", moveSon);
+        son.addEventListener("mouseup", function () {
+          son.removeEventListener("mousemove", moveSon);
+        });
+      });
+    </script>
+  </body>
+</html>

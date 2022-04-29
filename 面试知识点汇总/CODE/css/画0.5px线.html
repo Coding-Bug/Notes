@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画0.5px的线</title>
+    <style>
+        .hr{
+            width: 300px;
+            background-color: #000;
+        }
+        .scale-half1{
+            height: 1px;
+            transform: scaleY(50%);
+        }
+        .scale-half2{
+            width: 300px;
+            background-color: #000;
+            height: 1px;
+            transform: scaleY(50%);
+            transform-origin: 50% 100% ;
+        }
+        .one-px{
+            height: 1px;
+        }
+
+        .boxshowder{
+            height: 1px;
+            background: none;
+            box-shadow: 0 0.5px 0 #000;
+        }
+    </style>
+</head>
+<body>
+    
+    <p>1px</p>
+    <div class = "hr one-px"></div>
+    <p>1px+scaleY(0.5)</p>
+    <div class="hr scale-half1"></div>
+    <p>1px+scaleY+origin</p>
+    <div class="hr scale-half2"></div>
+    <p>box-showder</p>
+    <div class="hr boxshowder"></div>
+</body>
+</html>

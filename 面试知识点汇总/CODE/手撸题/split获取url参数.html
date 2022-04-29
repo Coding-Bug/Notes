@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function getParams(url){
+            const res = {}
+            // 要有?才有参数
+            if(url.includes('?')){
+               let str = url.split('?')[1]
+               str = str.split('&')
+               str.forEach(item=>{
+                   let key  = item.split('=')[0]
+                   let value = item.split('=')[1]
+                   res[key] = decodeURIComponent(value) // 解码!!!!
+               })
+            }
+            return res
+        }
+
+
+        let params = getParams('https://juejin.cn/post/7031322059414175774?share_token=6430a50-2b74-4240-8851-9fef17794618')
+        console.log(params);
+    </script>
+</body>
+</html>

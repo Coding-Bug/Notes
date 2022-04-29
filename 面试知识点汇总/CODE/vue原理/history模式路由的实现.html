@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 定义Router
+        class Router {
+            constructor() {
+                this.routes = {}
+                // 对popState进行监听
+                // 这个是监听回退行为的
+                window.addEventListener('popstate', e => {
+                    const path = e.state && e.state.path;
+                    this.routers[path] && this.routers[path]()
+                })
+            }
+
+            // 初始化
+            init(path) {
+                // 第一个参数是记录，第二个是传递简短标题，第三个是url
+                history.replaceState({ path: path }, null, path)
+                this.routes[path] && this.routes[path]()
+            }
+
+            // 创建路由
+            route(path, callback) {
+                this.route[path] = callback
+            }
+
+            // 改变路径
+            push(path) {
+                history.pushState({ path: path }, null,path)
+                this.route[path] && this.route[path]()
+            }
+
+        }
+
+        // 使用router
+        window.myRoute = new Router()
+        myRoute.route('/', () => console.log('page1'))
+        myRoute.route('/page2', () => console.log('page2'))
+
+        myRoute.push('/page2')
+    </script>
+</body>
+
+</html>

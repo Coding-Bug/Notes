@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      class MyPromise {
+        constructor(executor) {
+          this.promiseStatus = "pending";
+          this.promiseResult = null;
+          this.onCallback = []; // 保存回调函数
+          // 保存this
+          const selef = this;
+
+          function resolve(value) {
+            if (selef.promiseStatus !== "pending") {
+              return;
+            }
+            selef.promiseStatus = "fullfiled";
+            selef.promiseResult = value;
+            selef.onCallback.forEach((element) => {
+              element.onResolved();
+            });
+          }
+
+          function reject(reason) {
+            if (selef.promiseStatus !== "pending") {
+              return;
+            }
+            selef.promiseStatus = "rejected";
+            selef.promiseResult = reason;
+            selef.onCallback.forEach((element) => {
+              element.onRejected();
+            });
+          }
+
+          try {
+            executor(resolve, reject);
+          } catch (err) {
+            reject(err);
+          }
+        }
+
+        then(onResolved, onRejected) {
+          // 如果onResolved不是函数，修改为函数，返回value
+          onResolved = typeof onResolved === "function" ? onResolved : (value) => value;
+          // 如果onRjectedb不是函数，修改为函数，抛出异常
+          onRejected = typeof onRejected === "function" ? onRejected : (reason) => {throw reason;};
+
+          // then返回一个MyPromise
+          return new MyPromise((resolve, reject) => {
+            // 保存this
+            const self = this;
+            // 封装回调操作
+            function callback(onFun) {
+              try {
+                let result = onFun(self.promiseResult); // 回调函数的返回结果
+                // 如果返回了一个MyPromise对象
+                // 那么这个对象的状态根据这个对象的结果定，可以利用result的then方法来判断,在then里面对该MyPromise对象进行操作
+                if (result instanceof MyPromise) {
+                  result.then((v)=>{resolve(v),(r)=>{reject(r);};});
+                } else {
+                  resolve(result);
+                }
+              } catch (reason) {
+                reject(reason);
+              }
+            }
+
+            // 执行成功的回调 注意异步
+            if (this.promiseStatus === "fullfiled") {
+                callback(onResolved);
+            } else if (this.promiseStatus === "rejected") {
+                callback(onRejected);
+            
+            } else {
+              // 将成功失败的回调函数都加入到回调数组
+              this.onCallback.push({
+                onResolved() {
+                  setTimeout(() => {
+                    callback(onResolved);
+                  });
+                },
+                onRejected() {
+                  setTimeout(() => {
+                    callback(onRejected);
+                  });
+                },
+              });
+            }
+          });
+        }
+      }
+      
+      // // 测试
+      // let p = new MyPromise((resolve, reject) => {
+      //   setTimeout(() => {
+      //     resolve(100);
+      //   }, 2000);
+      // });
+
+      // p.then(res=>{
+      //     console.log(res);
+      // })
+
+      setTimeout(function () {
+        console.log(1);
+      }, 0);
+      new MyPromise(function (resolve, reject) {
+        console.log(2);
+        resolve();
+      })
+        .then(function () {
+          console.log(3);
+        })
+        .then(function () {
+          console.log(4);
+        });
+
+  
+      console.log(6);
+    </script>
+  </body>
+</html>
